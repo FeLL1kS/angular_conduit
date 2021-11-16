@@ -1,19 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Article } from '../aricles-mock';
 
 @Component({
   selector: 'app-articles-list-item',
   templateUrl: './articles-list-item.component.html',
-  styleUrls: ['./articles-list-item.component.scss']
+  styleUrls: ['./articles-list-item.component.scss'],
 })
-export class ArticlesListItemComponent implements OnInit {
-
+export class ArticlesListItemComponent {
   @Input() article?: Article;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor() {}
 
   onLike() {
     if (this.article) {
@@ -21,5 +17,4 @@ export class ArticlesListItemComponent implements OnInit {
       this.article.favorited = !this.article.favorited;
     }
   }
-
 }

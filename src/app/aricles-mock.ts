@@ -30,11 +30,11 @@ export const MockArticles: Article[] = [
     author: {
       username: 'User',
       bio: '',
-      image: 'http://i.imgur.com/Qr71crq.jpg'
+      image: 'http://i.imgur.com/Qr71crq.jpg',
     },
     comments: [],
     favoritesCount: 0,
-    favorited: false
+    favorited: false,
   },
   {
     slug: 'Test-Post-2',
@@ -47,10 +47,10 @@ export const MockArticles: Article[] = [
     author: {
       username: 'User',
       bio: '',
-      image: 'http://i.imgur.com/Qr71crq.jpg'
+      image: 'http://i.imgur.com/Qr71crq.jpg',
     },
     comments: [],
     favoritesCount: 0,
-    favorited: false
+    favorited: false,
   },
-]
+];

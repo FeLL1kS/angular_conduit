@@ -7,7 +7,11 @@ import { ArticlesListItemComponent } from './articles-list-item/articles-list-it
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent, ArticlesListComponent, ArticlesListItemComponent],
+  declarations: [
+    AppComponent,
+    ArticlesListComponent,
+    ArticlesListItemComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
