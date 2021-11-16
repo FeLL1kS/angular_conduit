@@ -1,0 +1,17 @@
+<div class="post-preview" *ngIf="article">
+  <div class="post-meta">
+    <a href="profile.html"><img [src]="article.author.image" /></a>
+    <div class="info">
+      <a href="profile.html" class="author">{{ article.author.username }}</a>
+      <span class="date">{{ article.createdAt | date:'longDate' }}</span>
+    </div>
+    <button class="btn btn-outline-primary btn-sm pull-xs-right" (click)="onLike()">
+      <i class="ion-heart"></i> {{ article.favoritesCount }}
+    </button>
+  </div>
+  <a class="preview-link">
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.description }}</p>
+    <span>Read more...</span>
+  </a>
+</div>
