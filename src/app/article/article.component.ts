@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Article } from '../aricles-mock';
 import { ArticleService } from '../article.service';
 
@@ -8,7 +9,9 @@ import { ArticleService } from '../article.service';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss'],
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
+  subscribe?: Subscription;
+
   article?: Article;
 
   constructor(
@@ -20,11 +23,15 @@ export class ArticleComponent implements OnInit {
     this.getArticle();
   }
 
+  ngOnDestroy(): void {
+    this.subscribe?.unsubscribe();
+  }
+
   getArticle(): void {
     const slug: string | null = this.route.snapshot.paramMap.get('slug');
 
     if (slug) {
-      this.articleService
+      this.subscribe = this.articleService
         .getArticleBySlug(slug)
         .subscribe((article) => (this.article = article));
     }

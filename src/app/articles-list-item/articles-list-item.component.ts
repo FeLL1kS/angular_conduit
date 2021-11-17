@@ -7,14 +7,12 @@ import { Article } from '../aricles-mock';
   styleUrls: ['./articles-list-item.component.scss'],
 })
 export class ArticlesListItemComponent {
-  @Input() article?: Article;
+  @Input() article!: Article;
 
   constructor() {}
 
   onLike() {
-    if (this.article) {
-      this.article.favoritesCount += this.article.favorited ? -1 : 1;
-      this.article.favorited = !this.article.favorited;
-    }
+    this.article.favoritesCount += this.article.favorited ? -1 : 1;
+    this.article.favorited = !this.article.favorited;
   }
 }
