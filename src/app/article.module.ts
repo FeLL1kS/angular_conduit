@@ -12,15 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
     ArticlesListItemComponent,
     ArticleComponent,
   ],
-  imports: [
-    CommonModule, 
-    AppRoutingModule,
-  ],
-  exports: [
-    AppRoutingModule
-  ],
-  providers: [
-    { provide: ArticleService }
-  ]
+  imports: [CommonModule, AppRoutingModule],
+  exports: [AppRoutingModule],
+  providers: [{ provide: ArticleService }],
 })
-export class ArticleModule { }
+export class ArticleModule {}

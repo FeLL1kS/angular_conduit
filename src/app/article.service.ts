@@ -7,9 +7,7 @@ export class ArticleService {
   articles$ = new BehaviorSubject<Article[]>([]);
 
   constructor() {
-    setTimeout(() => (
-      this.articles$.next(MockArticles)
-    ), 1000)
+    setTimeout(() => this.articles$.next(MockArticles), 1000);
   }
 
   getArticleBySlug(slug: string): BehaviorSubject<Article | undefined> {

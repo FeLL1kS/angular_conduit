@@ -5,9 +5,7 @@ import { AppComponent } from './app.component';
 import { ArticleModule } from './article.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [BrowserModule, ArticleModule],
   providers: [],
   bootstrap: [AppComponent],
