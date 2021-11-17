@@ -1,0 +1,97 @@
+<div class="post-page" *ngIf="article">
+  <div class="banner">
+    <div class="container">
+      <h1>{{ article.title }}</h1>
+
+      <div class="post-meta">
+        <a><img [src]="article.author.image" /></a>
+        <div class="info">
+          <a class="author">{{ article.author.username }}</a>
+          <span class="date">{{ article.createdAt | date: "longDate" }}</span>
+        </div>
+        <button class="btn btn-sm btn-outline-secondary">
+          <i class="ion-plus-round"></i>
+          &nbsp; Follow {{ article.author.username }}
+          <span class="counter"></span>
+        </button>
+        &nbsp;&nbsp;
+        <button class="btn btn-sm btn-outline-primary" (click)="onLike()">
+          <i class="ion-heart"></i>
+          &nbsp; Favorite Post
+          <span class="counter">{{ article.favoritesCount }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="row post-content">
+      <div class="col-md-12">
+        {{ article.body }}
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="post-actions">
+      <div class="post-meta">
+        <a><img [src]="article.author.image" /></a>
+        <div class="info">
+          <a class="author">{{ article.author.username }}</a>
+          <span class="date">{{ article.createdAt | date: "longDate" }}</span>
+        </div>
+
+        <button class="btn btn-sm btn-outline-secondary">
+          <i class="ion-plus-round"></i>
+          &nbsp; Follow {{ article.author.username }}
+          <span class="counter"></span>
+        </button>
+        &nbsp;
+        <button class="btn btn-sm btn-outline-primary" (click)="onLike()">
+          <i class="ion-heart"></i>
+          &nbsp; Favorite Post
+          <span class="counter">{{ article.favoritesCount }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="card" *ngFor="let comment of article.comments">
+          <div class="card-block">
+            <p class="card-text">
+              {{ comment.text }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <a class="comment-author">
+              <img [src]="comment.author.image" class="comment-author-img" />
+            </a>
+            &nbsp;
+            <a class="comment-author">{{ comment.author.username }}</a>
+            <span class="date-posted">{{
+              comment.createdAt | date: "longDate"
+            }}</span>
+          </div>
+        </div>
+
+        <form class="card comment-form">
+          <div class="card-block">
+            <textarea
+              class="form-control"
+              placeholder="Write a comment..."
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="card-footer">
+            <img
+              src="http://i.imgur.com/Qr71crq.jpg"
+              class="comment-author-img"
+            />
+            <button class="btn btn-sm btn-primary">Post Comment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

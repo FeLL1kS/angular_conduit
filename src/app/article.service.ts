@@ -12,4 +12,9 @@ export class ArticleService {
     const articles = of(MockArticles);
     return articles;
   }
+
+  getArticleBySlug(slug: string): Observable<Article | undefined> {
+    const article = of(MockArticles.find((article) => article.slug === slug));
+    return article;
+  }
 }

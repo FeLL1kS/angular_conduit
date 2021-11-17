@@ -4,6 +4,13 @@ interface Author {
   image: string;
 }
 
+interface Comment {
+  author: Author;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Article {
   slug: string;
   title: string;
@@ -13,7 +20,7 @@ export interface Article {
   updatedAt: Date;
   tagList: [];
   author: Author;
-  comments: [];
+  comments: Comment[];
   favoritesCount: number;
   favorited: boolean;
 }

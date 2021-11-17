@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ArticleComponent } from './article/article.component';
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 
-const routes: Routes = [{ path: '', component: ArticlesListComponent }];
+const routes: Routes = [
+  { path: '', component: ArticlesListComponent },
+  { path: 'article/:slug', component: ArticleComponent },
+];
 
 @NgModule({
   declarations: [],
