@@ -11,7 +11,7 @@ export class ArticleService {
   article$ = this.store.select(articleSelector);
 
   constructor(private store: Store) {}
-  
+
   loadArticle(slug: string): void {
     this.store.dispatch(loadArticle({ slug }));
   }
