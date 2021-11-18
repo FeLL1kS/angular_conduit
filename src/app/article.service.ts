@@ -1,17 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Article, MockArticles } from './aricles-mock';
+import { Store } from '@ngrx/store';
+import {
+  articlesSelector,
+  currentArticleSelector,
+  getArticleBySlug,
+  getArticles,
+  markAsFavorite,
+} from './reducers/articles';
 
 @Injectable()
 export class ArticleService {
-  articles$ = new BehaviorSubject<Article[]>([]);
+  articles$ = this.store.select(articlesSelector);
 
-  constructor() {
-    setTimeout(() => this.articles$.next(MockArticles), 1000);
+  constructor(private store: Store) {
+    this.store.dispatch(getArticles());
   }
 
-  getArticleBySlug(slug: string): BehaviorSubject<Article | undefined> {
-    const article = MockArticles.find((article) => article.slug === slug);
-    return new BehaviorSubject(article);
+  getArticleBySlug(slug: string) {
+    this.store.dispatch(getArticleBySlug({ slug }));
+    return this.store.select(currentArticleSelector);
+  }
+
+  markAsFavorite(slug: string): void {
+    this.store.dispatch(markAsFavorite({ slug }));
   }
 }

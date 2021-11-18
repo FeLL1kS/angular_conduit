@@ -1,4 +1,4 @@
-<div class="post-page" *ngIf="article">
+<div class="post-page" *ngIf="article$ | async as article">
   <div class="banner">
     <div class="container">
       <h1>{{ article.title }}</h1>
@@ -15,7 +15,11 @@
           <span class="counter"></span>
         </button>
         &nbsp;&nbsp;
-        <button class="btn btn-sm btn-outline-primary" (click)="onLike()">
+        <button
+          class="btn btn-sm btn-outline-primary"
+          [class.active]="favoritedArticle$ | async"
+          (click)="markAsFavorite()"
+        >
           <i class="ion-heart"></i>
           &nbsp; Favorite Post
           <span class="counter">{{ article.favoritesCount }}</span>
@@ -47,7 +51,11 @@
           <span class="counter"></span>
         </button>
         &nbsp;
-        <button class="btn btn-sm btn-outline-primary" (click)="onLike()">
+        <button
+          class="btn btn-sm btn-outline-primary"
+          [class.active]="favoritedArticle$ | async"
+          (click)="markAsFavorite()"
+        >
           <i class="ion-heart"></i>
           &nbsp; Favorite Post
           <span class="counter">{{ article.favoritesCount }}</span>

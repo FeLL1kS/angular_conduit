@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Article } from '../aricles-mock';
+import { Article } from '../../aricles-mock';
+import { ArticleService } from '../../article.service';
 
 @Component({
   selector: 'app-articles-list-item',
@@ -9,10 +10,9 @@ import { Article } from '../aricles-mock';
 export class ArticlesListItemComponent {
   @Input() article!: Article;
 
-  constructor() {}
+  constructor(private articleService: ArticleService) {}
 
-  onLike() {
-    this.article.favoritesCount += this.article.favorited ? -1 : 1;
-    this.article.favorited = !this.article.favorited;
+  markAsFavorite(slug: string) {
+    this.articleService.markAsFavorite(slug);
   }
 }
