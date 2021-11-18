@@ -1,9 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Article, MockArticles } from 'src/app/aricles-mock';
-import {
-  loadArticles,
-  markAsFavorite,
-} from './articles-list.actions';
+import { loadArticles, markAsFavorite } from './articles-list.actions';
 
 export interface ArticlesListState {
   articles: Article[];
