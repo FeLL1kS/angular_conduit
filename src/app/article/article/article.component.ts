@@ -12,8 +12,8 @@ import { markAsFavorite } from 'src/app/reducers/article/article.actions';
   styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit {
-  article$?: Observable<Article | undefined>;
-  favoritedArticle$?: Observable<boolean | undefined>;
+  article$ = this.articleService.article$;
+  favoritedArticle$ = this.article$.pipe(map((article) => article?.favorited));
 
   slug: string | null = this.route.snapshot.paramMap.get('slug');
 
@@ -30,10 +30,6 @@ export class ArticleComponent implements OnInit {
   loadArticle(): void {
     if (this.slug) {
       this.articleService.loadArticle(this.slug);
-      this.article$ = this.articleService.article$;
-      this.favoritedArticle$ = this.article$?.pipe(
-        map((article) => article?.favorited)
-      );
     }
   }
 
