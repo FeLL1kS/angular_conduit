@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Article } from '../../aricles-mock';
-import { ArticleService } from '../../article.service';
+import { ArticlesListService } from '../articles-list.service';
 
 @Component({
   selector: 'app-articles-list-item',
@@ -10,9 +10,9 @@ import { ArticleService } from '../../article.service';
 export class ArticlesListItemComponent {
   @Input() article!: Article;
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private articlesListService: ArticlesListService) {}
 
   markAsFavorite(slug: string) {
-    this.articleService.markAsFavorite(slug);
+    this.articlesListService.markAsFavorite(slug);
   }
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Article } from '../../aricles-mock';
-import { ArticleService } from '../../article.service';
+import { ArticlesListService } from '../articles-list.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -8,7 +7,7 @@ import { ArticleService } from '../../article.service';
   styleUrls: ['./articles-list.component.scss'],
 })
 export class ArticlesListComponent {
-  articles$ = this.articleService.articles$;
+  articles$ = this.articlesListService.articles$;
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private articlesListService: ArticlesListService) {}
 }
