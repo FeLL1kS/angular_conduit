@@ -7,7 +7,8 @@
     </div>
     <button
       class="btn btn-outline-primary btn-sm pull-xs-right"
-      (click)="onLike()"
+      [class.active]="article.favorited"
+      (click)="markAsFavorite(article.slug)"
     >
       <i class="ion-heart"></i> {{ article.favoritesCount }}
     </button>
