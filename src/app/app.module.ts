@@ -8,10 +8,12 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ArticleListModule } from './articles-list/articles-list.module';
+import { ApiModule } from './api/api.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    ApiModule,
     BrowserModule,
     ArticleModule,
     StoreModule.forRoot(reducers, {
