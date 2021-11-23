@@ -27,10 +27,7 @@ export class ArticlesListService {
   articles$ = this.store.select(articlesListSelector);
   articlesConfig$ = this.store.select(articlesListConfigSelector);
 
-  constructor(
-    private store: Store,
-    private apiService: ApiService,
-  ) {}
+  constructor(private store: Store, private apiService: ApiService) {}
 
   getArticles(config: ArticlesListConfig): Observable<ArticlesList> {
     return this.apiService.get(

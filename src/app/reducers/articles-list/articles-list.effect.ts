@@ -19,7 +19,9 @@ export class ArticlesListEffect {
       withLatestFrom(this.articlesListService.articlesConfig$),
       concatMap(([_, config]) =>
         this.articlesListService.getArticles(config).pipe(
-          map((articles) => ArticlesListActions.loadArticlesSuccess({ articles })),
+          map((articles) =>
+            ArticlesListActions.loadArticlesSuccess({ articles })
+          ),
           catchError(() => of(ArticlesListActions.loadArticlesUnsuccess()))
         )
       )
