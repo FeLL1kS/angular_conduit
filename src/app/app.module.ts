@@ -9,13 +9,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ArticleListModule } from './articles-list/articles-list.module';
 import { ApiModule } from './api/api.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     ApiModule,
     BrowserModule,
-    ArticleModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
@@ -23,7 +23,9 @@ import { ApiModule } from './api/api.module';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    EffectsModule.forRoot([]),
     ArticleListModule,
+    ArticleModule,
   ],
   bootstrap: [AppComponent],
 })

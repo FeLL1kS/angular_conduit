@@ -6,5 +6,10 @@ const featureSelector =
 
 export const articlesListSelector = createSelector(
   featureSelector,
-  (state) => state.articles
+  (state) => state.articles.articles
+);
+
+export const articlesListConfigSelector = createSelector(
+  featureSelector,
+  (state) => state.config
 );

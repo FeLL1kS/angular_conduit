@@ -1,23 +1,45 @@
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
 import { Store } from '@ngrx/store';
+
+import { ApiService } from '../api/api.service';
+
 import {
-  loadArticles,
   markAsFavorite,
+  updateConfig,
 } from '../reducers/articles-list/articles-list.actions';
-import { articlesListSelector } from '../reducers/articles-list/articles-list.selectors';
+import {
+  ArticlesList,
+  ArticlesListConfig,
+  ArticlesListFeedType,
+} from '../reducers/articles-list/articles-list.reducer';
+import {
+  articlesListConfigSelector,
+  articlesListSelector,
+} from '../reducers/articles-list/articles-list.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticlesListService {
   articles$ = this.store.select(articlesListSelector);
+  articlesConfig$ = this.store.select(articlesListConfigSelector);
 
-  constructor(private store: Store) {
-    this.loadArticles();
+  constructor(
+    private store: Store,
+    private apiService: ApiService,
+  ) {}
+
+  getArticles(config: ArticlesListConfig): Observable<ArticlesList> {
+    return this.apiService.get(
+      `articles/${config.type === 'GLOBAL' ? '' : 'feed'}`
+    );
   }
 
-  loadArticles(): void {
-    this.store.dispatch(loadArticles());
+  updateArticlesFeedType(type: ArticlesListFeedType = 'GLOBAL') {
+    this.store.dispatch(updateConfig({ config: { type } }));
   }
 
   markAsFavorite(slug: string): void {

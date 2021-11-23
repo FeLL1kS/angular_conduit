@@ -1,27 +1,61 @@
 import { createReducer, on } from '@ngrx/store';
-import { Article, MockArticles } from 'src/app/aricles-mock';
-import { loadArticles, markAsFavorite } from './articles-list.actions';
+import { Article } from 'src/app/aricles-mock';
+import {
+  loadArticles,
+  loadArticlesSuccess,
+  loadArticlesUnsuccess,
+  markAsFavorite,
+  updateConfig,
+} from './articles-list.actions';
+
+export type ArticlesListFeedType = 'GLOBAL' | 'FEED';
+
+export interface ArticlesListConfig {
+  type: ArticlesListFeedType;
+}
+
+export interface ArticlesList {
+  articles: Article[];
+  articlesCount: number;
+}
 
 export interface ArticlesListState {
-  articles: Article[];
+  articles: ArticlesList;
+  config: ArticlesListConfig;
 }
 
 export const initialState: ArticlesListState = {
-  articles: [],
+  articles: {
+    articles: [],
+    articlesCount: 0,
+  },
+  config: {
+    type: 'GLOBAL',
+  },
 };
 
 export const articlesListReducer = createReducer(
   initialState,
   on(loadArticles, (state) => ({
     ...state,
-    articles: MockArticles,
+  })),
+  on(loadArticlesSuccess, (state, payload) => ({
+    ...state,
+    articles: payload.articles,
+  })),
+  on(loadArticlesUnsuccess, (_) => ({
+    ...initialState,
+  })),
+  on(updateConfig, (state, payload) => ({
+    ...state,
+    config: payload.config,
   })),
   on(markAsFavorite, (state, payload) => {
-    const articleIndex = state.articles.findIndex(
+    const articleIndex = state.articles.articles.findIndex(
       (a) => a.slug === payload.slug
     );
 
-    const article = state.articles[articleIndex];
+    const article = state.articles.articles[articleIndex];
     const updatedArticle = {
       ...article,
       favoritesCount: article.favorited
@@ -31,14 +65,17 @@ export const articlesListReducer = createReducer(
     };
 
     const articles = [
-      ...state.articles.slice(0, articleIndex),
+      ...state.articles.articles.slice(0, articleIndex),
       updatedArticle,
-      ...state.articles.slice(articleIndex + 1),
+      ...state.articles.articles.slice(articleIndex + 1),
     ];
 
     return {
       ...state,
-      articles,
+      articles: {
+        articles,
+        articlesCount: articles.length,
+      },
     };
   })
 );
