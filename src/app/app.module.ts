@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { ArticleListModule } from './articles-list/articles-list.module';
 import { ApiModule } from './api/api.module';
 import { EffectsModule } from '@ngrx/effects';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { EffectsModule } from '@ngrx/effects';
       logOnly: environment.production,
     }),
     EffectsModule.forRoot([]),
+    HomeModule,
     ArticleListModule,
     ArticleModule,
   ],
