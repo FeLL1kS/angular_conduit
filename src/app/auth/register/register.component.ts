@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnDestroy {
-  unsubscribe$!: Subscription;
+  unsubscribe$: Subscription = new Subscription();
   errors: string[] = [];
 
   form: FormGroup = new FormGroup({
@@ -20,14 +20,16 @@ export class RegisterComponent implements OnDestroy {
   });
 
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.isLoggedIn$
+    this.unsubscribe$.add(this.authService.isLoggedIn$
       .pipe(map((isLoggedIn) => isLoggedIn))
-      .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'));
-    this.unsubscribe$ = this.authService.errorMessages$.subscribe((errors) => {
+      .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'))
+    );
+
+    this.unsubscribe$.add(this.authService.errorMessages$.subscribe((errors) => {
       this.errors = Object.keys(errors || {}).map(
         (key) => `${key} ${errors[key]}`
       );
-    });
+    }));
   }
 
   submit(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Subscription } from 'rxjs';
@@ -9,8 +9,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  unsubscribe$!: Subscription;
+export class LoginComponent implements OnDestroy {
+  unsubscribe$: Subscription = new Subscription();
   errors: string[] = [];
 
   form: FormGroup = new FormGroup({
@@ -19,18 +19,23 @@ export class LoginComponent {
   });
 
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.isLoggedIn$
+    this.unsubscribe$.add(this.authService.isLoggedIn$
       .pipe(map((isLoggedIn) => isLoggedIn))
-      .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'));
+      .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'))
+    );
 
-    this.unsubscribe$ = this.authService.errorMessages$.subscribe((errors) => {
+    this.unsubscribe$.add(this.authService.errorMessages$.subscribe((errors) => {
       this.errors = Object.keys(errors || {}).map(
         (key) => `${key} ${errors[key]}`
       );
-    });
+    }));
   }
 
   submit(): void {
     this.authService.login(this.form.value);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
   }
 }

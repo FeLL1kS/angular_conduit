@@ -9,7 +9,7 @@ import { HomeService } from '../home.service';
 })
 export class NavbarComponent {
   @Input() user: User | null = null;
-  @Input() isLoggedIn: boolean | null = null;
+  @Input() isLoggedIn: boolean = false;
 
   constructor(private homeService: HomeService) {}
 
