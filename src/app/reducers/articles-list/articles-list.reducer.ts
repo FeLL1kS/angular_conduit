@@ -36,9 +36,6 @@ export const initialState: ArticlesListState = {
 
 export const articlesListReducer = createReducer(
   initialState,
-  on(loadArticles, (state) => ({
-    ...state,
-  })),
   on(loadArticlesSuccess, (state, payload) => ({
     ...state,
     articles: payload.articles,

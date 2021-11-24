@@ -1,22 +1,29 @@
 import { createReducer, on } from '@ngrx/store';
-import { Article, MockArticles } from 'src/app/aricles-mock';
-import { loadArticle, markAsFavorite } from './article.actions';
+import { Article } from 'src/app/aricles-mock';
+import { Errors } from '../auth/auth.reducer';
+import { loadArticleSuccess, markAsFavorite } from './article.actions';
 
 export interface ArticleState {
   article?: Article;
+  errors: Errors;
+  loading: boolean;
 }
 
 export const initialState: ArticleState = {
   article: undefined,
+  errors: {},
+  loading: true,
 };
 
 export const articleReducer = createReducer(
   initialState,
-  on(loadArticle, (state, payload) => ({
+  on(loadArticleSuccess, (state, action) => ({
     ...state,
-    article: MockArticles.find((article) => article.slug === payload.slug),
+    article: action.article,
+    loading: false,
   })),
   on(markAsFavorite, (state) => ({
+    ...state,
     article: {
       ...state.article!,
       favoritesCount: state.article!.favorited
