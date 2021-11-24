@@ -19,16 +19,19 @@ export class LoginComponent implements OnDestroy {
   });
 
   constructor(private authService: AuthService, private router: Router) {
-    this.unsubscribe$.add(this.authService.isLoggedIn$
-      .pipe(map((isLoggedIn) => isLoggedIn))
-      .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'))
+    this.unsubscribe$.add(
+      this.authService.isLoggedIn$
+        .pipe(map((isLoggedIn) => isLoggedIn))
+        .subscribe((isLoggedIn) => isLoggedIn && this.router.navigateByUrl('/'))
     );
 
-    this.unsubscribe$.add(this.authService.errorMessages$.subscribe((errors) => {
-      this.errors = Object.keys(errors || {}).map(
-        (key) => `${key} ${errors[key]}`
-      );
-    }));
+    this.unsubscribe$.add(
+      this.authService.errorMessages$.subscribe((errors) => {
+        this.errors = Object.keys(errors || {}).map(
+          (key) => `${key} ${errors[key]}`
+        );
+      })
+    );
   }
 
   submit(): void {

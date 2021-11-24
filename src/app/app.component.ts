@@ -27,7 +27,7 @@ export class AppComponent implements OnDestroy {
       .getItem()
       .pipe(
         filter((token) => !!token),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => this.store.dispatch(getUser()));
   }
