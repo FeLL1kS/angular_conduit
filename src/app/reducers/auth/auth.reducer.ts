@@ -5,6 +5,7 @@ import {
   getUserUnsuccess,
   loginSuccess,
   loginUnsuccess,
+  logout,
   registerSuccess,
   registerUnsuccess,
 } from './auth.actions';
@@ -70,6 +71,9 @@ export const authReducer = createReducer(
   on(registerUnsuccess, (state, payload) => ({
     ...state,
     errorMessages: payload.errorMessages,
+  })),
+  on(logout, () => ({
+    ...initialState,
   })),
   on(addErorrMessage, (state, payload) => ({
     ...state,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { register } from '../reducers/auth/auth.actions';
+import { login, register } from '../reducers/auth/auth.actions';
 import {
   errorMessagesSelector,
   isLoggedInSelector,
@@ -28,6 +28,10 @@ export class AuthService {
 
   register(user: NewUser): void {
     this.store.dispatch(register({ user }));
+  }
+
+  login(user: UserCredentials): void {
+    this.store.dispatch(login({ user }));
   }
 
   loginQuery(credentials: UserCredentials): Observable<UserResponse> {

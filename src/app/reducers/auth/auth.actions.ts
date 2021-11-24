@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { NewUser } from 'src/app/auth/auth.interfaces';
+import { NewUser, UserCredentials } from 'src/app/auth/auth.interfaces';
 import { Errors, User } from './auth.reducer';
 
 export enum AuthActions {
@@ -12,6 +12,7 @@ export enum AuthActions {
   Register = '[AUTH] Register',
   RegisterSuccess = '[AUTH] RegisterSuccess',
   RegisterUnsuccess = '[AUTH] RegisterUnsuccess',
+  Logout = '[AUTH] Logout',
   AddErrorMessage = '[AUTH] AddErrorMessage',
 }
 
@@ -27,7 +28,10 @@ export const getUserUnsuccess = createAction(
   props<{ errorMessages: Errors }>()
 );
 
-export const login = createAction(AuthActions.Login);
+export const login = createAction(
+  AuthActions.Login,
+  props<{ user: UserCredentials }>()
+);
 
 export const loginSuccess = createAction(
   AuthActions.LoginSuccess,
@@ -58,3 +62,5 @@ export const addErorrMessage = createAction(
   AuthActions.AddErrorMessage,
   props<{ errorMessages: Errors }>()
 );
+
+export const logout = createAction(AuthActions.Logout);
