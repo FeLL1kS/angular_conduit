@@ -1,8 +1,8 @@
 <div class="post-preview">
   <div class="post-meta">
-    <a href="profile.html"><img [src]="article.author.image" /></a>
+    <a routerLink="/"><img [src]="article.author.image" /></a>
     <div class="info">
-      <a href="profile.html" class="author">{{ article.author.username }}</a>
+      <a routerLink="/" class="author">{{ article.author.username }}</a>
       <span class="date">{{ article.createdAt | date: "longDate" }}</span>
     </div>
     <button
