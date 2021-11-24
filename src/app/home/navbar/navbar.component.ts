@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/reducers/auth/auth.reducer';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,4 +10,10 @@ import { User } from 'src/app/reducers/auth/auth.reducer';
 export class NavbarComponent {
   @Input() user: User | null = null;
   @Input() isLoggedIn: boolean | null = null;
+
+  constructor(private homeService: HomeService) {}
+
+  logout(): void {
+    this.homeService.logout();
+  }
 }
