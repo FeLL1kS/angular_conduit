@@ -22,6 +22,9 @@ import {
 } from '../reducers/articles-list/articles-list.selectors';
 import { Article } from '../aricles-mock';
 import { ArticleResponse } from '../article/article.interface';
+import { TagsResponse } from './articles-list.inteface';
+import { tagsSelector } from '../reducers/default/default.selectors';
+import { loadTags } from '../reducers/default/default.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +32,7 @@ import { ArticleResponse } from '../article/article.interface';
 export class ArticlesListService {
   articles$ = this.store.select(articlesListSelector);
   articlesConfig$ = this.store.select(articlesListConfigSelector);
+  tags$ = this.store.select(tagsSelector);
 
   constructor(private store: Store, private apiService: ApiService) {}
 
@@ -36,6 +40,10 @@ export class ArticlesListService {
     return this.apiService.get(
       `articles/${config.type === 'GLOBAL' ? '' : 'feed'}`
     );
+  }
+
+  getTags(): Observable<TagsResponse> {
+    return this.apiService.get('tags');
   }
 
   favoriteQuery(slug: string): Observable<ArticleResponse> {
@@ -58,5 +66,9 @@ export class ArticlesListService {
 
   unfavorite(slug: string): void {
     this.store.dispatch(unfavorite({ slug }));
+  }
+
+  loadTags(): void {
+    this.store.dispatch(loadTags());
   }
 }

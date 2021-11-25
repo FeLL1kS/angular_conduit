@@ -6,13 +6,14 @@ import { ArticlesListService } from './articles-list.service';
 import { EffectsModule } from '@ngrx/effects';
 import { ArticlesListEffect } from '../reducers/articles-list/articles-list.effect';
 import { RouterModule } from '@angular/router';
+import { DefaultEffect } from '../reducers/default/default.effect';
 
 @NgModule({
   declarations: [ArticlesListComponent, ArticlesListItemComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([{ path: '', component: ArticlesListComponent }]),
-    EffectsModule.forFeature([ArticlesListEffect]),
+    EffectsModule.forFeature([ArticlesListEffect, DefaultEffect]),
   ],
   providers: [{ provide: ArticlesListService }],
 })
