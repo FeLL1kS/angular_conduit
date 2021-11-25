@@ -1,5 +1,9 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+import {
+  articleEditorReduce,
+  ArticleEditorState,
+} from './article-editor/article-editor.reducer';
 import { articleReducer, ArticleState } from './article/article.reducer';
 import {
   articlesListReducer,
@@ -11,6 +15,7 @@ import { defaultReducer, DefaultState } from './default/default.reducer';
 export interface State {
   articlesList: ArticlesListState;
   article: ArticleState;
+  articleEditor: ArticleEditorState;
   auth: AuthState;
   default: DefaultState;
 }
@@ -18,6 +23,7 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
   articlesList: articlesListReducer,
   article: articleReducer,
+  articleEditor: articleEditorReduce,
   auth: authReducer,
   default: defaultReducer,
 };

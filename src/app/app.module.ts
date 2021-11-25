@@ -31,6 +31,13 @@ import { AuthModule } from './auth/auth.module';
         loadChildren: () =>
           import('./article/article.module').then((m) => m.ArticleModule),
       },
+      {
+        path: 'editor',
+        loadChildren: () =>
+          import('./article-editor/article-editor.module').then(
+            (m) => m.ArticleEditorModule
+          ),
+      },
     ]),
     StoreModule.forRoot(reducers, {
       metaReducers,
