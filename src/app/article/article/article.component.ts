@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
-import { Article } from 'src/app/aricles-mock';
+import { map } from 'rxjs';
 import { ArticleService } from 'src/app/article/article.service';
-import { markAsFavorite } from 'src/app/reducers/article/article.actions';
 
 @Component({
   selector: 'app-article',
@@ -33,9 +31,11 @@ export class ArticleComponent implements OnInit {
     }
   }
 
-  markAsFavorite(): void {
-    if (this.slug) {
-      this.store.dispatch(markAsFavorite());
-    }
+  favorite(slug: string) {
+    this.articleService.favorite(slug);
+  }
+
+  unfavorite(slug: string) {
+    this.articleService.unfavorite(slug);
   }
 }

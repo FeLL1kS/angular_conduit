@@ -18,7 +18,7 @@ export class ApiService {
     });
   }
 
-  post<T, D>(url: string, data: D): Observable<T> {
+  post<T, D>(url: string, data?: D): Observable<T> {
     return this.http.post<T>(
       `${environment.apiUrl}/${url}`,
       JSON.stringify(data),

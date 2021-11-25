@@ -12,7 +12,11 @@ export class ArticlesListItemComponent {
 
   constructor(private articlesListService: ArticlesListService) {}
 
-  markAsFavorite(slug: string) {
-    this.articlesListService.markAsFavorite(slug);
+  favorite(slug: string) {
+    this.articlesListService.favorite(slug);
+  }
+
+  unfavorite(slug: string) {
+    this.articlesListService.unfavorite(slug);
   }
 }

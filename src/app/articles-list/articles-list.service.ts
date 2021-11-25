@@ -7,7 +7,8 @@ import { Store } from '@ngrx/store';
 import { ApiService } from '../api/api.service';
 
 import {
-  markAsFavorite,
+  favorite,
+  unfavorite,
   updateConfig,
 } from '../reducers/articles-list/articles-list.actions';
 import {
@@ -19,6 +20,8 @@ import {
   articlesListConfigSelector,
   articlesListSelector,
 } from '../reducers/articles-list/articles-list.selectors';
+import { Article } from '../aricles-mock';
+import { ArticleResponse } from '../article/article.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -35,11 +38,25 @@ export class ArticlesListService {
     );
   }
 
+  favoriteQuery(slug: string): Observable<ArticleResponse> {
+    return this.apiService.post<ArticleResponse, null>(
+      `articles/${slug}/favorite`
+    );
+  }
+
+  unfavoriteQuery(slug: string): Observable<ArticleResponse> {
+    return this.apiService.delete<ArticleResponse>(`articles/${slug}/favorite`);
+  }
+
   updateArticlesFeedType(type: ArticlesListFeedType = 'GLOBAL') {
     this.store.dispatch(updateConfig({ config: { type } }));
   }
 
-  markAsFavorite(slug: string): void {
-    this.store.dispatch(markAsFavorite({ slug }));
+  favorite(slug: string): void {
+    this.store.dispatch(favorite({ slug }));
+  }
+
+  unfavorite(slug: string): void {
+    this.store.dispatch(unfavorite({ slug }));
   }
 }
