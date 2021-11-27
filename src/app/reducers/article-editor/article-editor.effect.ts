@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, tap, withLatestFrom } from 'rxjs';
+import { concatMap, map, mergeMap, tap, withLatestFrom } from 'rxjs';
 import { ArticleEditorService } from 'src/app/article-editor/article-editor.service';
 import * as ArticleEditorActions from './article-editor.actions';
-import { emptyArticle } from './article-editor.reducer';
 
 @Injectable()
 export class ArticleEditorEffect {
@@ -23,28 +22,56 @@ export class ArticleEditorEffect {
     )
   );
 
-  createOrUpdateArticle$ = createEffect(() =>
+  createArticle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ArticleEditorActions.createOrUpdateArticle),
-      withLatestFrom(this.articleEditorService.form.valueChanges),
-      concatMap(([_, values]) =>
+      ofType(ArticleEditorActions.createArticle),
+      concatMap((article) =>
         this.articleEditorService
-          .createOrUpdateArticleQuery({
+          .createArticleQuery({
             article: {
-              title: values['title'],
-              body: values['body'],
-              description: values['description'],
-              tagList: values['tags'].split(';'),
+              slug: '',
+              title: article.article.title,
+              body: article.article.body,
+              description: article.article.description,
+              tagList: article.article.tagList.split(';'),
             },
           })
           .pipe(
-            map((response) => {
-              this.articleEditorService.form.reset();
+            mergeMap((response) => {
               this.router.navigateByUrl(`/article/${response.article.slug}`);
 
-              return ArticleEditorActions.createOrUpdateArticleSuccess({
-                article: emptyArticle,
-              });
+              return [
+                ArticleEditorActions.createArticleSuccess({ article: response.article }),
+                ArticleEditorActions.clearForm()
+              ];
+            })
+          )
+      )
+    )
+  );
+
+  updateArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleEditorActions.updateArticle),
+      concatMap((article) =>
+        this.articleEditorService
+          .updateArticleQuery({
+            article: {
+              slug: article.article.slug,
+              title: article.article.title,
+              body: article.article.body,
+              description: article.article.description,
+              tagList: article.article.tagList.split(';'),
+            },
+          })
+          .pipe(
+            mergeMap((response) => {
+              this.router.navigateByUrl(`/article/${response.article.slug}`);
+
+              return [
+                ArticleEditorActions.updateArticleSuccess({ article: response.article }),
+                ArticleEditorActions.clearForm()
+              ];
             })
           )
       )

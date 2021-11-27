@@ -36,17 +36,26 @@
                 type="text"
                 class="form-control"
                 placeholder="Enter the tags by separating them with ;"
-                name="tags"
-                formControlName="tags"
+                name="tagList"
+                formControlName="tagList"
               />
               <div class="tag-list"></div>
             </fieldset>
             <button
               class="btn btn-lg pull-xs-right btn-primary"
               type="button"
-              (click)="createOrUpdateArticle()"
+              *ngIf="(data$ | async)!.slug === ''"
+              (click)="createArticle()"
             >
               Publish Article
+            </button>
+            <button
+              class="btn btn-lg pull-xs-right btn-primary"
+              type="button"
+              *ngIf="(data$ | async)!.slug as slug"
+              (click)="updateArticle(slug)"
+            >
+              Update Article
             </button>
           </fieldset>
         </form>
