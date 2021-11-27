@@ -1,8 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Article } from 'src/app/aricles-mock';
-import {
-  ArticleForm,
-} from 'src/app/article-editor/article-editor.interface';
+import { ArticleForm } from 'src/app/article-editor/article-editor.interface';
 
 export enum ArticleEditorActions {
   LoadArticle = '[ARTICLE-EDITOR] LoadArticle',
@@ -11,7 +9,7 @@ export enum ArticleEditorActions {
   CreateArticleSuccess = '[ARTICLE-EDITOR] CreateArticleSuccess',
   UpdateArticle = '[ARTICLE-EDITOR] UpdateArticle',
   UpdateArticleSuccess = '[ARTICLE-EDITOR] UpdateArticleSuccess',
-  ClearForm = '[ARTICLE-EDITOR] ClearForm'
+  ClearForm = '[ARTICLE-EDITOR] ClearForm',
 }
 
 export const loadArticle = createAction(
@@ -44,6 +42,4 @@ export const updateArticleSuccess = createAction(
   props<{ article: Article }>()
 );
 
-export const clearForm = createAction(
-  ArticleEditorActions.ClearForm,
-)
+export const clearForm = createAction(ArticleEditorActions.ClearForm);

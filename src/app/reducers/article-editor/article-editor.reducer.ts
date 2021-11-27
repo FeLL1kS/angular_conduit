@@ -16,7 +16,7 @@ export const emptyArticle: ArticleForm = {
 
 export const initialState: ArticleEditorState = {
   article: {
-    ...emptyArticle
+    ...emptyArticle,
   },
 };
 
@@ -27,21 +27,22 @@ export const articleEditorReduce = createReducer(
     ArticleEditorActions.createArticleSuccess,
     ArticleEditorActions.updateArticleSuccess,
     (state, payload) => {
-      console.log(payload.article.slug)
+      console.log(payload.article.slug);
       return {
-      ...state,
-      article: {
-        slug: payload.article.slug,
-        title: payload.article.title,
-        body: payload.article.body,
-        description: payload.article.description,
-        tagList: payload.article.tagList.join('; '),
-      },
-    }}
+        ...state,
+        article: {
+          slug: payload.article.slug,
+          title: payload.article.title,
+          body: payload.article.body,
+          description: payload.article.description,
+          tagList: payload.article.tagList.join('; '),
+        },
+      };
+    }
   ),
   on(ArticleEditorActions.clearForm, (_) => ({
     article: {
-      ...emptyArticle
+      ...emptyArticle,
     },
   }))
 );

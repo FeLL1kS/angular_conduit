@@ -24,9 +24,7 @@ export class ArticleEditorComponent implements OnDestroy {
 
   constructor(private articleEditorService: ArticleEditorService) {
     this.unsubscribe$.add(
-      this.data$.subscribe((data) =>
-        this.form.patchValue(data)
-      )
+      this.data$.subscribe((data) => this.form.patchValue(data))
     );
   }
 
@@ -37,7 +35,7 @@ export class ArticleEditorComponent implements OnDestroy {
   updateArticle(slug: string): void {
     this.articleEditorService.updateArticle({
       ...this.form.value,
-      slug
+      slug,
     });
   }
 

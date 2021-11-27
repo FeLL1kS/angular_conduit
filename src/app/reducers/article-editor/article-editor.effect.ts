@@ -41,8 +41,10 @@ export class ArticleEditorEffect {
               this.router.navigateByUrl(`/article/${response.article.slug}`);
 
               return [
-                ArticleEditorActions.createArticleSuccess({ article: response.article }),
-                ArticleEditorActions.clearForm()
+                ArticleEditorActions.createArticleSuccess({
+                  article: response.article,
+                }),
+                ArticleEditorActions.clearForm(),
               ];
             })
           )
@@ -69,8 +71,10 @@ export class ArticleEditorEffect {
               this.router.navigateByUrl(`/article/${response.article.slug}`);
 
               return [
-                ArticleEditorActions.updateArticleSuccess({ article: response.article }),
-                ArticleEditorActions.clearForm()
+                ArticleEditorActions.updateArticleSuccess({
+                  article: response.article,
+                }),
+                ArticleEditorActions.clearForm(),
               ];
             })
           )

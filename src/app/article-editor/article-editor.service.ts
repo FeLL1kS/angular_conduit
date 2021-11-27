@@ -8,17 +8,15 @@ import {
   loadArticle,
   updateArticle,
 } from '../reducers/article-editor/article-editor.actions';
-import {
-  articleSelector,
-} from '../reducers/article-editor/article-editor.selector';
+import { articleSelector } from '../reducers/article-editor/article-editor.selector';
 import { ArticleCreateRequest, ArticleForm } from './article-editor.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArticleEditorService {
   data$ = this.store.select(articleSelector);
-  
+
   constructor(private apiService: ApiService, private store: Store) {}
 
   createArticle(article: ArticleForm): void {
@@ -33,14 +31,18 @@ export class ArticleEditorService {
     this.store.dispatch(loadArticle({ slug }));
   }
 
-  createArticleQuery(article: ArticleCreateRequest): Observable<ArticleResponse> {
+  createArticleQuery(
+    article: ArticleCreateRequest
+  ): Observable<ArticleResponse> {
     return this.apiService.post<ArticleResponse, ArticleCreateRequest>(
       `articles`,
       article
     );
   }
 
-  updateArticleQuery(article: ArticleCreateRequest): Observable<ArticleResponse> {
+  updateArticleQuery(
+    article: ArticleCreateRequest
+  ): Observable<ArticleResponse> {
     return this.apiService.put<ArticleResponse, ArticleCreateRequest>(
       `articles/${article.article.slug}`,
       article
