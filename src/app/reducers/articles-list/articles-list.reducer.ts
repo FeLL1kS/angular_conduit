@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { Article } from 'src/app/aricles-mock';
 import {
-  loadArticles,
+  favoriteSuccess,
   loadArticlesSuccess,
   loadArticlesUnsuccess,
-  markAsFavorite,
+  unfavoriteSuccess,
   updateConfig,
 } from './articles-list.actions';
 
@@ -47,32 +47,44 @@ export const articlesListReducer = createReducer(
     ...state,
     config: payload.config,
   })),
-  on(markAsFavorite, (state, payload) => {
-    const articleIndex = state.articles.articles.findIndex(
-      (a) => a.slug === payload.slug
+  on(favoriteSuccess, (state, payload) => {
+    const updatedArticles = replaceArticleBySlug(
+      state.articles.articles,
+      payload.article
     );
-
-    const article = state.articles.articles[articleIndex];
-    const updatedArticle = {
-      ...article,
-      favoritesCount: article.favorited
-        ? article.favoritesCount - 1
-        : article.favoritesCount + 1,
-      favorited: !article.favorited,
-    };
-
-    const articles = [
-      ...state.articles.articles.slice(0, articleIndex),
-      updatedArticle,
-      ...state.articles.articles.slice(articleIndex + 1),
-    ];
 
     return {
       ...state,
       articles: {
-        articles,
-        articlesCount: articles.length,
+        articles: updatedArticles,
+        articlesCount: updatedArticles.length,
+      },
+    };
+  }),
+  on(unfavoriteSuccess, (state, payload) => {
+    const updatedArticles = replaceArticleBySlug(
+      state.articles.articles,
+      payload.article
+    );
+
+    return {
+      ...state,
+      articles: {
+        articles: updatedArticles,
+        articlesCount: updatedArticles.length,
       },
     };
   })
 );
+
+const replaceArticleBySlug = (articles: Article[], article: Article) => {
+  const articleIndex = articles.findIndex((a) => a.slug === article.slug);
+
+  const updatedArticles = [
+    ...articles.slice(0, articleIndex),
+    article,
+    ...articles.slice(articleIndex + 1),
+  ];
+
+  return updatedArticles;
+};

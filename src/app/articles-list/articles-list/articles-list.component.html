@@ -11,10 +11,24 @@
         <div class="feed-toggle">
           <ul class="nav nav-pills outline-active">
             <li class="nav-item">
-              <a class="nav-link">Your Feed</a>
+              <a
+                class="nav-link"
+                [ngClass]="{
+                  active: (articlesConfig$ | async)?.type === 'FEED'
+                }"
+                (click)="updateArticlesFeedType('FEED')"
+                >Your Feed</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link active">Global Feed</a>
+              <a
+                class="nav-link"
+                [ngClass]="{
+                  active: (articlesConfig$ | async)?.type === 'GLOBAL'
+                }"
+                (click)="updateArticlesFeedType('GLOBAL')"
+                >Global Feed</a
+              >
             </li>
           </ul>
         </div>
@@ -24,6 +38,18 @@
           [article]="article"
         >
         </app-articles-list-item>
+      </div>
+
+      <div class="col-md-3">
+        <div class="sidebar">
+          <p>Popular Tags</p>
+
+          <div class="tag-list">
+            <a class="tag-pill tag-default" *ngFor="let tag of tags$ | async">{{
+              tag
+            }}</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

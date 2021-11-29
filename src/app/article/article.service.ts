@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { Article } from '../aricles-mock';
-import { loadArticle } from '../reducers/article/article.actions';
+import {
+  favorite,
+  loadArticle,
+  unfavorite,
+} from '../reducers/article/article.actions';
 import { articleSelector } from '../reducers/article/article.selector';
-import { markAsFavorite } from '../reducers/articles-list/articles-list.actions';
 import { ArticleResponse } from './article.interface';
 
 @Injectable()
@@ -22,7 +24,23 @@ export class ArticleService {
     return this.apiService.get(`articles/${slug}`);
   }
 
-  markAsFavorite(slug: string): void {
-    this.store.dispatch(markAsFavorite({ slug }));
+  favoriteQuery(slug: string): Observable<ArticleResponse> {
+    return this.apiService.post<ArticleResponse, null>(
+      `articles/${slug}/favorite`
+    );
+  }
+
+  unfavoriteQuery(slug: string): Observable<ArticleResponse> {
+    return this.apiService.delete<ArticleResponse>(
+      `articles/${slug}/unfavorite`
+    );
+  }
+
+  favorite(slug: string): void {
+    this.store.dispatch(favorite({ slug }));
+  }
+
+  unfavorite(slug: string): void {
+    this.store.dispatch(unfavorite({ slug }));
   }
 }

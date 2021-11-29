@@ -8,7 +8,9 @@
     <button
       class="btn btn-outline-primary btn-sm pull-xs-right"
       [class.active]="article.favorited"
-      (click)="markAsFavorite(article.slug)"
+      (click)="
+        article.favorited ? unfavorite(article.slug) : favorite(article.slug)
+      "
     >
       <i class="ion-heart"></i> {{ article.favoritesCount }}
     </button>

@@ -28,6 +28,36 @@ export class ArticlesListEffect {
     )
   );
 
+  favorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticlesListActions.favorite),
+      concatMap((action) =>
+        this.articlesListService
+          .favoriteQuery(action.slug)
+          .pipe(
+            map((response) =>
+              ArticlesListActions.favoriteSuccess({ article: response.article })
+            )
+          )
+      )
+    )
+  );
+
+  unfavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticlesListActions.unfavorite),
+      concatMap((action) =>
+        this.articlesListService.unfavoriteQuery(action.slug).pipe(
+          map((response) =>
+            ArticlesListActions.unfavoriteSuccess({
+              article: response.article,
+            })
+          )
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private articlesListService: ArticlesListService

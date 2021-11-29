@@ -18,7 +18,11 @@
         <button
           class="btn btn-sm btn-outline-primary"
           [class.active]="favoritedArticle$ | async"
-          (click)="markAsFavorite()"
+          (click)="
+            article.favorited
+              ? unfavorite(article.slug)
+              : favorite(article.slug)
+          "
         >
           <i class="ion-heart"></i>
           &nbsp; Favorite Post
@@ -54,7 +58,11 @@
         <button
           class="btn btn-sm btn-outline-primary"
           [class.active]="favoritedArticle$ | async"
-          (click)="markAsFavorite()"
+          (click)="
+            article.favorited
+              ? unfavorite(article.slug)
+              : favorite(article.slug)
+          "
         >
           <i class="ion-heart"></i>
           &nbsp; Favorite Post

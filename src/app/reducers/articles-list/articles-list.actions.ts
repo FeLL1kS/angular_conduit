@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Article } from 'src/app/aricles-mock';
 import { ArticlesList, ArticlesListConfig } from './articles-list.reducer';
 
 export enum ArticlesListActions {
@@ -6,7 +7,10 @@ export enum ArticlesListActions {
   LoadArticlesSuccess = '[ARTICLES-LIST] LoadArticlesSuccess',
   LoadArticlesUnsuccess = '[ARTICLES-LIST] LoadArticlesUnsuccess',
   UpdateConfig = '[ARTICLES-LIST] UpdateConfig',
-  MarkAsFavorite = '[ARTICLES-LIST] MarkAsFavorite',
+  Favorite = '[ARTICLES-LIST] Favorite',
+  FavoriteSuccess = '[ARTICLES-LIST] FavoriteSuccess',
+  Unfavorite = '[ARTICLES-LIST] Unfavorite',
+  UnfavoriteSuccess = '[ARTICLES-LIST] UnfavoriteSuccess',
 }
 
 export const loadArticles = createAction(ArticlesListActions.LoadArticles);
@@ -25,7 +29,22 @@ export const updateConfig = createAction(
   props<{ config: ArticlesListConfig }>()
 );
 
-export const markAsFavorite = createAction(
-  ArticlesListActions.MarkAsFavorite,
+export const favorite = createAction(
+  ArticlesListActions.Favorite,
   props<{ slug: string }>()
+);
+
+export const favoriteSuccess = createAction(
+  ArticlesListActions.FavoriteSuccess,
+  props<{ article: Article }>()
+);
+
+export const unfavorite = createAction(
+  ArticlesListActions.Unfavorite,
+  props<{ slug: string }>()
+);
+
+export const unfavoriteSuccess = createAction(
+  ArticlesListActions.UnfavoriteSuccess,
+  props<{ article: Article }>()
 );
