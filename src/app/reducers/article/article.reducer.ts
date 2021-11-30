@@ -1,20 +1,25 @@
 import { createReducer, on } from '@ngrx/store';
-import { Article } from 'src/app/aricles-mock';
+import { Article, Comment } from 'src/app/aricles-mock';
 import { Errors } from '../auth/auth.reducer';
 import {
+  addCommentSuccess,
   favoriteSuccess,
+  getComments,
+  getCommentsSuccess,
   loadArticleSuccess,
   unfavoriteSuccess,
 } from './article.actions';
 
 export interface ArticleState {
   article?: Article;
+  comments: Comment[];
   errors: Errors;
   loading: boolean;
 }
 
 export const initialState: ArticleState = {
   article: undefined,
+  comments: [],
   errors: {},
   loading: true,
 };
@@ -33,5 +38,13 @@ export const articleReducer = createReducer(
   on(unfavoriteSuccess, (state, payload) => ({
     ...state,
     article: payload.article,
+  })),
+  on(getCommentsSuccess, (state, payload) => ({
+    ...state,
+    comments: payload.comments,
+  })),
+  on(addCommentSuccess, (state, payload) => ({
+    ...state,
+    comments: [payload.comment, ...state.comments],
   }))
 );

@@ -4,9 +4,9 @@ interface Author {
   image: string;
 }
 
-interface Comment {
+export interface Comment {
   author: Author;
-  text: string;
+  body: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,7 +20,6 @@ export interface Article {
   updatedAt: Date;
   tagList: string[];
   author: Author;
-  comments: Comment[];
   favoritesCount: number;
   favorited: boolean;
 }
@@ -39,7 +38,6 @@ export const MockArticles: Article[] = [
       bio: '',
       image: 'http://i.imgur.com/Qr71crq.jpg',
     },
-    comments: [],
     favoritesCount: 0,
     favorited: false,
   },
@@ -56,7 +54,6 @@ export const MockArticles: Article[] = [
       bio: '',
       image: 'http://i.imgur.com/Qr71crq.jpg',
     },
-    comments: [],
     favoritesCount: 0,
     favorited: false,
   },

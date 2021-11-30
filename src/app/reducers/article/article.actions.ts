@@ -1,15 +1,19 @@
 import { createAction, props } from '@ngrx/store';
-import { Article } from 'src/app/aricles-mock';
+import { Article, Comment } from 'src/app/aricles-mock';
 import { Errors } from '../auth/auth.reducer';
 
 export enum ArticleActions {
   LoadArticle = '[ARTICLE] LoadArticle',
   LoadArticleSuccess = '[ARTICLE] LoadArticleSuccess',
   LoadArticleUnsuccess = '[ARTICLE] LoadArticleUnsuccess',
-  Favorite = '[ARTICLES-LIST] Favorite',
-  FavoriteSuccess = '[ARTICLES-LIST] FavoriteSuccess',
-  Unfavorite = '[ARTICLES-LIST] Unfavorite',
-  UnfavoriteSuccess = '[ARTICLES-LIST] UnfavoriteSuccess',
+  Favorite = '[ARTICLE] Favorite',
+  FavoriteSuccess = '[ARTICLE] FavoriteSuccess',
+  Unfavorite = '[ARTICLE] Unfavorite',
+  UnfavoriteSuccess = '[ARTICLE] UnfavoriteSuccess',
+  GetComments = '[ARTICLE] GetComments',
+  GetCommentsSuccess = '[ARTICLE] GetCommentsSuccess',
+  AddComment = '[ARTICLE] AddComment',
+  AddCommentSuccess = '[ARTICLE] AddCommentSuccess',
 }
 
 export const loadArticle = createAction(
@@ -45,4 +49,24 @@ export const unfavorite = createAction(
 export const unfavoriteSuccess = createAction(
   ArticleActions.UnfavoriteSuccess,
   props<{ article: Article }>()
+);
+
+export const getComments = createAction(
+  ArticleActions.GetComments,
+  props<{ slug: string }>()
+);
+
+export const getCommentsSuccess = createAction(
+  ArticleActions.GetCommentsSuccess,
+  props<{ comments: Comment[] }>()
+);
+
+export const addComment = createAction(
+  ArticleActions.AddComment,
+  props<{ slug: string; body: string }>()
+);
+
+export const addCommentSuccess = createAction(
+  ArticleActions.AddCommentSuccess,
+  props<{ comment: Comment }>()
 );

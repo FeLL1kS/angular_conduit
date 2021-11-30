@@ -3,16 +3,29 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import {
+  addComment,
   favorite,
+  getComments,
   loadArticle,
   unfavorite,
 } from '../reducers/article/article.actions';
-import { articleSelector } from '../reducers/article/article.selector';
-import { ArticleResponse } from './article.interface';
+import {
+  articleSelector,
+  commentsSelector,
+} from '../reducers/article/article.selector';
+import { userSelector } from '../reducers/auth/auth.selectors';
+import {
+  AddCommentRequest,
+  AddCommentResponse,
+  ArticleResponse,
+  CommentsResponse,
+} from './article.interface';
 
 @Injectable()
 export class ArticleService {
   article$ = this.store.select(articleSelector);
+  comments$ = this.store.select(commentsSelector);
+  user$ = this.store.select(userSelector);
 
   constructor(private store: Store, private apiService: ApiService) {}
 
@@ -20,8 +33,27 @@ export class ArticleService {
     this.store.dispatch(loadArticle({ slug }));
   }
 
+  addComment(slug: string, body: string): void {
+    this.store.dispatch(addComment({ slug, body }));
+  }
+
+  getComments(slug: string): void {
+    this.store.dispatch(getComments({ slug }));
+  }
+
   articleQuery(slug: string): Observable<ArticleResponse> {
     return this.apiService.get(`articles/${slug}`);
+  }
+
+  addCommentQuery(slug: string, body: string): Observable<AddCommentResponse> {
+    return this.apiService.post<AddCommentResponse, AddCommentRequest>(
+      `articles/${slug}/comments`,
+      { comment: { body } }
+    );
+  }
+
+  getCommentsQuery(slug: string): Observable<CommentsResponse> {
+    return this.apiService.get(`articles/${slug}/comments`);
   }
 
   favoriteQuery(slug: string): Observable<ArticleResponse> {
@@ -32,7 +64,7 @@ export class ArticleService {
 
   unfavoriteQuery(slug: string): Observable<ArticleResponse> {
     return this.apiService.delete<ArticleResponse>(
-      `articles/${slug}/unfavorite`
+      `articles/${slug}/favorite`
     );
   }
 
