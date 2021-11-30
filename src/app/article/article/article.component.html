@@ -16,7 +16,7 @@
         </button>
         &nbsp;&nbsp;
         <button
-          *ngIf="isCreatedByCurrentUser$ | async | async"
+          *ngIf="isCreatedByCurrentUser$ | async"
           class="btn btn-sm btn-outline-secondary"
           routerLink="/editor/{{ article.slug }}"
         >
