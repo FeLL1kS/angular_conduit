@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { concatMap, map } from 'rxjs';
 import { ArticleService } from 'src/app/article/article.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ArticleComponent implements OnInit {
   favoritedArticle$ = this.article$.pipe(map((article) => article?.favorited));
 
   isCreatedByCurrentUser$ = this.user$.pipe(
-    map((user) =>
+    concatMap((user) =>
       this.article$.pipe(
         map((article) => user.username === article?.author.username)
       )
