@@ -82,7 +82,11 @@
 
     <div class="row justify-content-center">
       <div class="col-md-8 col-md-offset-2">
-        <form *ngIf="(user$ | async) as user" class="card comment-form" [formGroup]="form">
+        <form
+          *ngIf="user$ | async as user"
+          class="card comment-form"
+          [formGroup]="form"
+        >
           <div class="card-block">
             <textarea
               class="form-control"
@@ -92,11 +96,10 @@
             ></textarea>
           </div>
           <div class="card-footer">
-            <img
-              [src]="user.image"
-              class="comment-author-img"
-            />
-            <button class="btn btn-sm btn-primary" (click)="submit()">Post Comment</button>
+            <img [src]="user.image" class="comment-author-img" />
+            <button class="btn btn-sm btn-primary" (click)="submit()">
+              Post Comment
+            </button>
           </div>
         </form>
 

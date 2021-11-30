@@ -63,9 +63,7 @@ export class ArticleService {
   }
 
   unfavoriteQuery(slug: string): Observable<ArticleResponse> {
-    return this.apiService.delete<ArticleResponse>(
-      `articles/${slug}/favorite`
-    );
+    return this.apiService.delete<ArticleResponse>(`articles/${slug}/favorite`);
   }
 
   favorite(slug: string): void {

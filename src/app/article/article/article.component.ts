@@ -26,7 +26,7 @@ export class ArticleComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     body: new FormControl(''),
-  })
+  });
 
   slug: string | null = this.route.snapshot.paramMap.get('slug');
 
