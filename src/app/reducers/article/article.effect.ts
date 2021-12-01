@@ -22,6 +22,34 @@ export class ArticleEffect {
     )
   );
 
+  getComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.getComments),
+      concatMap((action) =>
+        this.articleService.getCommentsQuery(action.slug).pipe(
+          map((response) =>
+            ArticleActions.getCommentsSuccess({ comments: response.comments })
+          ),
+          catchError(() => of())
+        )
+      )
+    )
+  );
+
+  addComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.addComment),
+      concatMap((action) =>
+        this.articleService.addCommentQuery(action.slug, action.body).pipe(
+          map((response) =>
+            ArticleActions.addCommentSuccess({ comment: response.comment })
+          ),
+          catchError(() => of())
+        )
+      )
+    )
+  );
+
   favorite$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ArticleActions.favorite),

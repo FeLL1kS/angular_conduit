@@ -7,3 +7,8 @@ export const articleSelector = createSelector(
   featureSelector,
   (state) => state.article
 );
+
+export const commentsSelector = createSelector(
+  featureSelector,
+  (state) => state.comments
+);
