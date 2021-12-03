@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, map } from 'rxjs';
 import { ArticleService } from 'src/app/article/article.service';
@@ -24,7 +24,7 @@ export class ArticleComponent implements OnInit {
   );
 
   form: FormGroup = new FormGroup({
-    body: new FormControl(''),
+    body: new FormControl('', [Validators.required]),
   });
 
   slug: string | null = this.route.snapshot.paramMap.get('slug');
