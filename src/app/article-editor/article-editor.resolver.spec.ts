@@ -18,11 +18,13 @@ describe('ArticleEditorResolver', () => {
       ],
     });
     resolver = TestBed.inject(ArticleEditorResolver);
-    articleEditorServiceSpy = TestBed.inject(ArticleEditorService) as jasmine.SpyObj<ArticleEditorService>;
+    articleEditorServiceSpy = TestBed.inject(
+      ArticleEditorService
+    ) as jasmine.SpyObj<ArticleEditorService>;
     route = new ActivatedRouteSnapshot();
     route.params = {
-      slug: 'slug'
-    }
+      slug: 'slug',
+    };
   });
 
   it('should be created', () => {
@@ -30,14 +32,14 @@ describe('ArticleEditorResolver', () => {
   });
 
   it('articleEditorResolver should resolve', () => {
-    resolver.resolve(route).subscribe(res => {
+    resolver.resolve(route).subscribe((res) => {
       expect(res).toBe(true);
     });
-  })
+  });
 
   it('loadArticles from ArticleEditorService should be called once', () => {
-    resolver.resolve(route).subscribe(res => {
+    resolver.resolve(route).subscribe((res) => {
       expect(articleEditorServiceSpy.loadArticle.calls.count()).toBe(1);
     });
-  })
+  });
 });

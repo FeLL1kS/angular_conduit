@@ -10,27 +10,28 @@ describe('ArticleEditorComponent', () => {
   let articleEditorServiceSpy: jasmine.SpyObj<ArticleEditorService>;
 
   beforeEach(async () => {
-    const spy = jasmine.createSpyObj('ArticleEditorService', 
-      ['createArticle', 'updateArticle', 'ngOnDestroy'], 
+    const spy = jasmine.createSpyObj(
+      'ArticleEditorService',
+      ['createArticle', 'updateArticle', 'ngOnDestroy'],
       {
         data$: of({
           slug: '',
           title: '',
           description: '',
           body: '',
-          tagList: ''
-        })
+          tagList: '',
+        }),
       }
-    )
+    );
 
     await TestBed.configureTestingModule({
       declarations: [ArticleEditorComponent],
-      providers: [
-        { provide: ArticleEditorService, useValue: spy },
-      ],
+      providers: [{ provide: ArticleEditorService, useValue: spy }],
     }).compileComponents();
 
-    articleEditorServiceSpy = TestBed.inject(ArticleEditorService) as jasmine.SpyObj<ArticleEditorService>
+    articleEditorServiceSpy = TestBed.inject(
+      ArticleEditorService
+    ) as jasmine.SpyObj<ArticleEditorService>;
   });
 
   beforeEach(() => {
@@ -46,32 +47,32 @@ describe('ArticleEditorComponent', () => {
   describe('form control getters', () => {
     it('should return title control', () => {
       expect(component.form.controls['title']).toBeTruthy();
-    })
-    
+    });
+
     it('should return description control', () => {
       expect(component.form.controls['description']).toBeTruthy();
-    })
+    });
 
     it('should return body control', () => {
       expect(component.form.controls['body']).toBeTruthy();
-    })
+    });
 
     it('should return tagList control', () => {
       expect(component.form.controls['tagList']).toBeTruthy();
-    })
-  })
-  
+    });
+  });
+
   it('createArticle should only call createArticle from the service once', () => {
     component.createArticle();
 
     expect(articleEditorServiceSpy.createArticle.calls.count()).toBe(1);
-  })
+  });
 
   it('updateArticle should only call updateArticle from the service once', () => {
     component.updateArticle('');
 
     expect(articleEditorServiceSpy.updateArticle.calls.count()).toBe(1);
-  })
+  });
 
   it('ngOnDestroy should call unsubsribe', () => {
     spyOn(Subscription.prototype, 'unsubscribe');
@@ -79,5 +80,5 @@ describe('ArticleEditorComponent', () => {
     component.ngOnDestroy();
 
     expect(Subscription.prototype.unsubscribe).toHaveBeenCalledTimes(1);
-  })
+  });
 });

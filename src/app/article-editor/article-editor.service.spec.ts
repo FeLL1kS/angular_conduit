@@ -14,7 +14,10 @@ describe('ArticleEditorService', () => {
       providers: [
         ArticleEditorService,
         ApiService,
-        { provide: HttpClient, useValue: jasmine.createSpyObj('HttpClient', ['get', 'post', 'put']) },
+        {
+          provide: HttpClient,
+          useValue: jasmine.createSpyObj('HttpClient', ['get', 'post', 'put']),
+        },
         provideMockStore(),
       ],
     });
