@@ -24,7 +24,7 @@ export interface ArticlesListState {
   config: ArticlesListConfig;
 }
 
-export const initialState: ArticlesListState = {
+export const articlesListInitialState: ArticlesListState = {
   articles: {
     articles: [],
     articlesCount: 0,
@@ -35,13 +35,13 @@ export const initialState: ArticlesListState = {
 };
 
 export const articlesListReducer = createReducer(
-  initialState,
+  articlesListInitialState,
   on(loadArticlesSuccess, (state, payload) => ({
     ...state,
     articles: payload.articles,
   })),
   on(loadArticlesUnsuccess, (_) => ({
-    ...initialState,
+    ...articlesListInitialState,
   })),
   on(updateConfig, (state, payload) => ({
     ...state,

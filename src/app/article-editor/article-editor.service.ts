@@ -11,9 +11,7 @@ import {
 import { articleSelector } from '../reducers/article-editor/article-editor.selector';
 import { ArticleCreateRequest, ArticleForm } from './article-editor.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ArticleEditorService {
   data$ = this.store.select(articleSelector);
 

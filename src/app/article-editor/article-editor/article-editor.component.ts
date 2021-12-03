@@ -1,8 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { map, Subscription } from 'rxjs';
-import { articleSelector } from 'src/app/reducers/article-editor/article-editor.selector';
+import { Subscription } from 'rxjs';
 import { ArticleEditorService } from '../article-editor.service';
 
 @Component({
@@ -24,7 +22,14 @@ export class ArticleEditorComponent implements OnDestroy {
 
   constructor(private articleEditorService: ArticleEditorService) {
     this.unsubscribe$.add(
-      this.data$.subscribe((data) => this.form.patchValue(data))
+      this.data$.subscribe((data) =>
+        this.form.patchValue({
+          title: data.title,
+          description: data.description,
+          body: data.body,
+          tagList: data.tagList,
+        })
+      )
     );
   }
 

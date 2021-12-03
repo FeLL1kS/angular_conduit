@@ -1,25 +1,28 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 import { AppComponent } from './app.component';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { LocalStorageJwtService } from './auth/local-storage-jwt.service';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
+  let store: MockStore;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
+      providers: [provideMockStore(), LocalStorageJwtService],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    store = TestBed.inject(MockStore);
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'pbi-test app is running!'
-    );
+  it('should create the app', () => {
+    expect(app).toBeTruthy();
   });
 });

@@ -28,7 +28,7 @@ export interface AuthState {
   errorMessages: Errors;
 }
 
-const initialState: AuthState = {
+export const authInitialState: AuthState = {
   isLoggenIn: false,
   user: {
     email: '',
@@ -41,7 +41,7 @@ const initialState: AuthState = {
 };
 
 export const authReducer = createReducer(
-  initialState,
+  authInitialState,
   on(getUserSuccess, (state, payload) => ({
     ...state,
     isLoggenIn: true,
@@ -73,7 +73,7 @@ export const authReducer = createReducer(
     errorMessages: payload.errorMessages,
   })),
   on(logout, () => ({
-    ...initialState,
+    ...authInitialState,
   })),
   on(addErorrMessage, (state, payload) => ({
     ...state,
