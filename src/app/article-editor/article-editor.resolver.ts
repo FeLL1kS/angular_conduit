@@ -1,23 +1,13 @@
 import { Injectable } from '@angular/core';
-import {
-  Router,
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ArticleEditorService } from './article-editor.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ArticleEditorResolver implements Resolve<boolean> {
   constructor(private articleEditorService: ArticleEditorService) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     const slug = route.params['slug'];
 
     if (slug) {

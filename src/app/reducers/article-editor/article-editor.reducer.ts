@@ -14,14 +14,14 @@ export const emptyArticle: ArticleForm = {
   tagList: '',
 };
 
-export const initialState: ArticleEditorState = {
+export const articleEditorInitialState: ArticleEditorState = {
   article: {
     ...emptyArticle,
   },
 };
 
 export const articleEditorReduce = createReducer(
-  initialState,
+  articleEditorInitialState,
   on(
     ArticleEditorActions.loadArticleSuccess,
     ArticleEditorActions.createArticleSuccess,

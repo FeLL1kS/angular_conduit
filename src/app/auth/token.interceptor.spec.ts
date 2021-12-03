@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { LocalStorageJwtService } from './local-storage-jwt.service';
 
 import { TokenInterceptor } from './token.interceptor';
 
 describe('TokenInterceptor', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      providers: [TokenInterceptor],
+      providers: [TokenInterceptor, LocalStorageJwtService],
     })
   );
 

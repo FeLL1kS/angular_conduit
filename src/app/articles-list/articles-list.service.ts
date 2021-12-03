@@ -20,15 +20,12 @@ import {
   articlesListConfigSelector,
   articlesListSelector,
 } from '../reducers/articles-list/articles-list.selectors';
-import { Article } from '../aricles-mock';
 import { ArticleResponse } from '../article/article.interface';
 import { TagsResponse } from './articles-list.inteface';
 import { tagsSelector } from '../reducers/default/default.selectors';
 import { loadTags } from '../reducers/default/default.actions';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ArticlesListService {
   articles$ = this.store.select(articlesListSelector);
   articlesConfig$ = this.store.select(articlesListConfigSelector);

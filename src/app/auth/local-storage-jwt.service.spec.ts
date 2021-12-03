@@ -6,7 +6,9 @@ describe('LocalStorageJwtService', () => {
   let service: LocalStorageJwtService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [LocalStorageJwtService],
+    });
     service = TestBed.inject(LocalStorageJwtService);
   });
 

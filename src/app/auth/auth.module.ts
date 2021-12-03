@@ -5,11 +5,16 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffect } from '../reducers/auth/auth.effect';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageJwtService } from './local-storage-jwt.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
+
+export const authRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+];
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -18,10 +23,7 @@ import { TokenInterceptor } from './token.interceptor';
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffect]),
-    RouterModule.forChild([
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-    ]),
+    RouterModule.forChild(authRoutes),
   ],
   providers: [
     AuthService,

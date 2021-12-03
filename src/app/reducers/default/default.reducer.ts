@@ -7,13 +7,13 @@ export interface DefaultState {
   errors: Errors;
 }
 
-const initialState: DefaultState = {
+export const defaultInitialState: DefaultState = {
   tags: [],
   errors: {},
 };
 
 export const defaultReducer = createReducer(
-  initialState,
+  defaultInitialState,
   on(loadTagsSuccess, (state, payload) => ({
     ...state,
     tags: payload.tags,

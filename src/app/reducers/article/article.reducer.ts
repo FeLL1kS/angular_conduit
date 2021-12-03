@@ -17,7 +17,7 @@ export interface ArticleState {
   loading: boolean;
 }
 
-export const initialState: ArticleState = {
+export const articleInitialState: ArticleState = {
   article: undefined,
   comments: [],
   errors: {},
@@ -25,7 +25,7 @@ export const initialState: ArticleState = {
 };
 
 export const articleReducer = createReducer(
-  initialState,
+  articleInitialState,
   on(loadArticleSuccess, (state, action) => ({
     ...state,
     article: action.article,
