@@ -21,9 +21,9 @@ const articleStub: ArticleResponse = {
     favorited: false,
     favoritesCount: 0,
     tagList: [],
-    title: ''
-  }
-}
+    title: '',
+  },
+};
 
 const addCommentResponseStub: AddCommentResponse = {
   comment: {
@@ -35,8 +35,8 @@ const addCommentResponseStub: AddCommentResponse = {
     body: 'body',
     createdAt: new Date(),
     updatedAt: new Date(),
-  }
-}
+  },
+};
 
 describe('ArticleService', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
@@ -48,7 +48,15 @@ describe('ArticleService', () => {
         provideMockStore(),
         ArticleService,
         ApiService,
-        { provide: HttpClient, useValue: jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']) }
+        {
+          provide: HttpClient,
+          useValue: jasmine.createSpyObj('HttpClient', [
+            'get',
+            'post',
+            'put',
+            'delete',
+          ]),
+        },
       ],
     });
     service = TestBed.inject(ArticleService);
@@ -60,18 +68,18 @@ describe('ArticleService', () => {
   });
 
   it('articleQuery should returns article', () => {
-    httpClientSpy.get.and.returnValue(of(articleStub))
+    httpClientSpy.get.and.returnValue(of(articleStub));
 
-    service.articleQuery('slug').subscribe(article => {
+    service.articleQuery('slug').subscribe((article) => {
       expect(article).toEqual(articleStub);
-    })
-  })
+    });
+  });
 
   it('addCommentQuery should returns new comment', () => {
     httpClientSpy.post.and.returnValue(of(addCommentResponseStub));
 
-    service.addCommentQuery('slug', 'body').subscribe(comment => {
+    service.addCommentQuery('slug', 'body').subscribe((comment) => {
       expect(comment).toEqual(addCommentResponseStub);
-    })
-  })
+    });
+  });
 });
