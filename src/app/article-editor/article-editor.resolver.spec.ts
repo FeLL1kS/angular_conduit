@@ -31,15 +31,17 @@ describe('ArticleEditorResolver', () => {
     expect(resolver).toBeTruthy();
   });
 
-  it('articleEditorResolver should resolve', () => {
+  it('articleEditorResolver should resolve', (done) => {
     resolver.resolve(route).subscribe((res) => {
       expect(res).toBe(true);
+      done();
     });
   });
 
-  it('loadArticles from ArticleEditorService should be called once', () => {
+  it('loadArticles from ArticleEditorService should be called once', (done) => {
     resolver.resolve(route).subscribe((res) => {
       expect(articleEditorServiceSpy.loadArticle.calls.count()).toBe(1);
+      done();
     });
   });
 });
