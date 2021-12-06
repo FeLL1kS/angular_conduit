@@ -67,19 +67,21 @@ describe('ArticleService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('articleQuery should returns article', () => {
+  it('articleQuery should returns article', (done) => {
     httpClientSpy.get.and.returnValue(of(articleStub));
 
     service.articleQuery('slug').subscribe((article) => {
       expect(article).toEqual(articleStub);
+      done();
     });
   });
 
-  it('addCommentQuery should returns new comment', () => {
+  it('addCommentQuery should returns new comment', (done) => {
     httpClientSpy.post.and.returnValue(of(addCommentResponseStub));
 
     service.addCommentQuery('slug', 'body').subscribe((comment) => {
       expect(comment).toEqual(addCommentResponseStub);
+      done();
     });
   });
 });
