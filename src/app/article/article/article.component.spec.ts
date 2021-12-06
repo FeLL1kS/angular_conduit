@@ -8,22 +8,31 @@ import { articleRoutes } from '../article.module';
 import { ArticleService } from '../article.service';
 import { ArticleComponent } from './article.component';
 
-class ArticleServiceStub {
-  article$: Observable<Article | undefined> = new Observable<Article>();
-  comments$: Observable<Comment> = new Observable<Comment>();
-  user$: Observable<User> = new Observable<User>();
-}
-
 describe('ArticleComponent', () => {
   let component: ArticleComponent;
   let fixture: ComponentFixture<ArticleComponent>;
+  let articleServiceSpy: jasmine.SpyObj<ArticleService>;
 
   beforeEach(async () => {
+    const spy = jasmine.createSpyObj(
+      'ArticleService',
+      ['addComment', 'loadArticle', 'getComments', 'favorite', 'unfavorite'],
+      {
+        article$: new Observable<Article | undefined>(),
+        comments$: new Observable<Comment>(),
+        user$: new Observable<User>(),
+      }
+    );
+
     await TestBed.configureTestingModule({
       declarations: [ArticleComponent],
       imports: [RouterTestingModule.withRoutes(articleRoutes)],
-      providers: [{ provide: ArticleService, useClass: ArticleServiceStub }],
+      providers: [{ provide: ArticleService, useValue: spy }],
     }).compileComponents();
+
+    articleServiceSpy = TestBed.inject(
+      ArticleService
+    ) as jasmine.SpyObj<ArticleService>;
   });
 
   beforeEach(() => {
@@ -34,5 +43,57 @@ describe('ArticleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return body control', () => {
+    const controll = component.form.controls['body'];
+    expect(controll).toBeTruthy();
+  });
+
+  it('should be invalid when empty', () => {
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should be valid when body is not empty', () => {
+    component.form.controls['body'].setValue('body');
+    expect(component.form.valid).toBeTruthy();
+  });
+
+  it('should reset form after submit', () => {
+    component.form.controls['body'].setValue('body');
+    expect(component.form.valid).toBeTruthy();
+
+    component.slug = 'slug';
+    const bodyValue = component.form.controls['body'].value;
+    component.submit();
+
+    expect(articleServiceSpy.addComment).toHaveBeenCalledOnceWith(
+      component.slug,
+      bodyValue
+    );
+    expect(component.form.controls['body'].value).toBeNull();
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('getComments should load comments', () => {
+    component.slug = 'slug';
+
+    component.getComments();
+
+    expect(articleServiceSpy.getComments).toHaveBeenCalledOnceWith(
+      component.slug
+    );
+  });
+
+  it('favorite should call favorite function from service', () => {
+    component.favorite('slug');
+
+    expect(articleServiceSpy.favorite.calls.count()).toBe(1);
+  });
+
+  it('unfavorite should call unfavorite function from service', () => {
+    component.unfavorite('slug');
+
+    expect(articleServiceSpy.unfavorite.calls.count()).toBe(1);
   });
 });
